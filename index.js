@@ -59,21 +59,21 @@ const aggiornaCasellaDelGiorno = async () => {
     const day = today.getDate(); // 1,2,...31
     const month = today.getMonth(); // 0=Gennaio, 11=Dicembre
 
-    if (month !== 11) { // 11 = Dicembre
+    /* if (month !== 11) { // 11 = Dicembre
         console.log("Non è dicembre, nessuna casella attivata.");
         return;
-    }
+    } */
 
     try {
-        const result = await Casella.updateOne({ ID: day }, { $set: { Attiva: true } });
-        console.log(`Casella ID=${day} attivata:`, result.modifiedCount);
+        const result = await Casella.updateOne({ ID: (day-1) }, { $set: { Attiva: true } });
+        console.log(`Casella ID=${day - 1} attivata:`, result.modifiedCount);
     } catch (err) {
         console.error("Errore aggiornamento casella:", err);
     }
 };
 
 // Esegue ogni giorno a mezzanotte
-cron.schedule('0 0 * * *', () => {
+cron.schedule('0 13 * * *', () => {
     console.log("🔥 Aggiornamento casella giornaliera...");
     aggiornaCasellaDelGiorno();
 });
