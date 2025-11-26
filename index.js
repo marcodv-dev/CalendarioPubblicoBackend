@@ -103,3 +103,7 @@ const aggiorna = async () => {
 cron.schedule('50 9 * * *', () => {
     aggiorna();
 });
+
+app.get("/api/time", (req, res) => {
+    res.json({ serverTime: new Date().toString() });
+});
