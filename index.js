@@ -100,7 +100,16 @@ const aggiorna = async () => {
     }
 };
 
-cron.schedule('5 9 * * *', () => {
+cron.schedule('10 9 * * *', () => {
+    console.log("time1: "+new Date().toString())
+    aggiorna();
+});
+cron.schedule('10 10 * * *', () => {
+    console.log("time2: "+new Date().toString())
+    aggiorna();
+});
+cron.schedule('10 8 * * *', () => {
+    console.log("tim3: "+new Date().toString())
     aggiorna();
 });
 
