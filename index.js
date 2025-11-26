@@ -87,14 +87,18 @@ app.listen(PORT, () => console.log(`Server in ascolto sulla porta ${PORT}`));
 
 
 
+aggiorna();
 // Funzione per aggiornare la casella del giorno
 const aggiorna = async () => {
     try {
-        const result = await Casella.updateMany(
-            {},                 // nessun filtro → seleziona tutti i documenti
-            { $set: { Attiva: true } }
-        );
+        const all = await Casella.find({});
+        console.log("Documenti prima dell'update:", all);
+
+        const result = await Casella.updateMany({}, { $set: { Attiva: true } });
         console.log("Aggiornate:", result.modifiedCount);
+
+        const after = await Casella.find({});
+        console.log("Documenti dopo l'update:", after);
     } catch (err) {
         console.error("Errore aggiornamento casella:", err);
     }
