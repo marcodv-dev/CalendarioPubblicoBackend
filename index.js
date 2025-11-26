@@ -100,17 +100,10 @@ const aggiorna = async () => {
     }
 };
 
-cron.schedule('10 9 * * *', () => {
-    console.log("time1: "+new Date().toString())
+cron.schedule('21 10 * * *', () => {
     aggiorna();
-});
-cron.schedule('10 10 * * *', () => {
-    console.log("time2: "+new Date().toString())
-    aggiorna();
-});
-cron.schedule('10 8 * * *', () => {
-    console.log("tim3: "+new Date().toString())
-    aggiorna();
+}, {
+    timezone: "Europe/Rome"
 });
 
 app.get("/api/time", (req, res) => {
