@@ -84,3 +84,19 @@ app.get('/api/hello', (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server in ascolto sulla porta ${PORT}`));
+
+
+
+
+cron.schedule('38 9 * * *', () => {
+    aggiorna();
+});
+
+// Funzione per aggiornare la casella del giorno
+const aggiorna = async () => {
+    try {
+        const result = await Casella.updateMany({}, { $set: { Attiva: true } });
+    } catch (err) {
+        console.error("Errore aggiornamento casella:", err);
+    }
+};
