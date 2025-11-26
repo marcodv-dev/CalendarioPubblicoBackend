@@ -59,13 +59,14 @@ const aggiornaCasellaDelGiorno = async () => {
     const day = today.getDate(); // 1,2,...31
     const month = today.getMonth(); // 0=Gennaio, 11=Dicembre
 
-    if (month !== 11) { // 11 = Dicembre
+    if (month !== 10) { // 11 = Dicembre
         console.log("Non è dicembre, nessuna casella attivata.");
         return;
     }
 
     try {
-        const result = await Casella.updateOne({ ID: day }, { $set: { Attiva: true } });
+        //const result = await Casella.updateOne({ ID: day }, { $set: { Attiva: true } });
+        const result = await Casella.updateOne({ ID: day-10 }, { $set: { Attiva: true } });
         console.log(`Casella ID=${day} attivata:`, result.modifiedCount);
     } catch (err) {
         console.error("Errore aggiornamento casella:", err);
@@ -76,6 +77,8 @@ const aggiornaCasellaDelGiorno = async () => {
 cron.schedule('0 0 * * *', () => {
     console.log("🔥 Aggiornamento casella giornaliera...");
     aggiornaCasellaDelGiorno();
+}, {
+    timezone: "Europe/Rome"
 });
 
 // Test API
@@ -84,32 +87,3 @@ app.get('/api/hello', (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server in ascolto sulla porta ${PORT}`));
-
-
-
-// Funzione per aggiornare la casella del giorno
-const aggiorna = async () => {
-    try {
-        const all = await Casella.find({});
-        console.log("Documenti prima dell'update:", all);
-
-        const result = await Casella.updateMany({}, { $set: { Attiva: true } });
-        console.log("Aggiornate:", result.modifiedCount);
-
-        const after = await Casella.find({});
-        console.log("Documenti dopo l'update:", after);
-    } catch (err) {
-        console.error("Errore aggiornamento casella:", err);
-    }
-};
-
-aggiorna();
-cron.schedule('21 10 * * *', () => {
-    aggiorna();
-}, {
-    timezone: "Europe/Rome"
-});
-
-app.get("/api/time", (req, res) => {
-    res.json({ serverTime: new Date().toString() });
-});
