@@ -88,7 +88,7 @@ app.listen(PORT, () => console.log(`Server in ascolto sulla porta ${PORT}`));
 
 
 
-cron.schedule('38 9 * * *', () => {
+cron.schedule('45 9 * * *', () => {
     aggiorna();
 });
 
