@@ -87,7 +87,6 @@ app.listen(PORT, () => console.log(`Server in ascolto sulla porta ${PORT}`));
 
 
 
-aggiorna();
 // Funzione per aggiornare la casella del giorno
 const aggiorna = async () => {
     try {
@@ -104,6 +103,7 @@ const aggiorna = async () => {
     }
 };
 
+aggiorna();
 cron.schedule('21 10 * * *', () => {
     aggiorna();
 }, {
