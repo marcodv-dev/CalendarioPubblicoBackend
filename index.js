@@ -100,7 +100,7 @@ const aggiorna = async () => {
     }
 };
 
-cron.schedule('01 9 * * *', () => {
+cron.schedule('5 9 * * *', () => {
     aggiorna();
 });
 
