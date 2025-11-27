@@ -59,14 +59,14 @@ const aggiornaCasellaDelGiorno = async () => {
     const day = today.getDate(); // 1,2,...31
     const month = today.getMonth(); // 0=Gennaio, 11=Dicembre
 
-    if (month !== 10) { // 11 = Dicembre
+    /* if (month !== 10) { // 11 = Dicembre
         console.log("Non è dicembre, nessuna casella attivata.");
         return;
-    }
+    } */
 
     try {
         //const result = await Casella.updateOne({ ID: day }, { $set: { Attiva: true } });
-        const result = await Casella.updateOne({ ID: day-10 }, { $set: { Attiva: true } });
+        const result = await Casella.updateOne({ ID: day-10 }, { $set: { Attiva: false } });
         console.log(`Casella ID=${day} attivata:`, result.modifiedCount);
     } catch (err) {
         console.error("Errore aggiornamento casella:", err);
