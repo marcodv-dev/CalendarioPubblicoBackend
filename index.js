@@ -28,7 +28,7 @@ const Casella = mongoose.model('Casella', casellaSchema, 'caselle');
 // GET tutte le caselle attive
 app.get("/api/caselle", async (req, res) => {
     try {
-        const result = await Casella.find({ Attiva: true });
+        const result = await Casella.find({ Attiva: true }).sort({ ID: 1 });
         console.log(result);
         res.json(result);
     } catch (err) {
@@ -89,7 +89,7 @@ app.get('/api/hello', (req, res) => {
 app.listen(PORT, () => console.log(`Server in ascolto sulla porta ${PORT}`));
 
 
-// Funzione per aggiornare la casella del giorno
+/* // Funzione per aggiornare la casella del giorno
 const aggiorna = async () => {
     try {
         const result = await Casella.updateMany(
@@ -101,7 +101,7 @@ const aggiorna = async () => {
         console.error("Errore aggiornamento casella:", err);
     }
 };
-aggiorna();
+aggiorna(); */
 
 app.get("/api/time", (req, res) => {
     res.json({ serverTime: new Date().toString() });
