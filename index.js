@@ -66,7 +66,7 @@ const aggiornaCasellaDelGiorno = async () => {
 
     try {
         //const result = await Casella.updateOne({ ID: day }, { $set: { Attiva: true } });
-        const result = await Casella.updateOne({ ID: day-10 }, { $set: { Attiva: false } });
+        const result = await Casella.updateOne({ ID: /* day */1 }, { $set: { Attiva: false } });
         console.log(`Casella ID=${day} attivata:`, result.modifiedCount);
     } catch (err) {
         console.error("Errore aggiornamento casella:", err);
