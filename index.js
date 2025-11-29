@@ -73,6 +73,15 @@ const aggiornaCasellaDelGiorno = async () => {
     }
 };
 
+app.get('/cron/aggiorna', async (req, res) => {
+    try {
+        await aggiornaCasellaDelGiorno();
+        res.send("OK");
+    } catch (e) {
+        res.status(500).send("Errore");
+    }
+});
+
 // Esegue ogni giorno a mezzanotte
 cron.schedule('0 0 * * *', () => {
     console.log("🔥 Aggiornamento casella giornaliera...");
