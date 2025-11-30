@@ -37,6 +37,20 @@ app.get("/api/caselle", async (req, res) => {
     }
 });
 
+app.get("/api/caselle_attive", async (req, res) => {
+    try {
+        for (let i = 1; i < 25; i++) {
+            const result = await Casella.updateOne({ ID: i }, { $set: { Attiva: false } });
+            console.log(result);
+        }
+        res.json({ success: true });
+        //res.json(result);
+    } catch (err) {
+        console.error("Errore MongoDB:", err);
+        res.status(500).json({ error: "Errore recupero caselle" });
+    }
+});
+
 // POST per segnare una casella come completata
 app.post("/api/casella_completata", async (req, res) => {
     try {
@@ -59,14 +73,14 @@ const aggiornaCasellaDelGiorno = async () => {
     const day = today.getDate(); // 1,2,...31
     const month = today.getMonth(); // 0=Gennaio, 11=Dicembre
 
-    /* if (month !== 10) { // 11 = Dicembre
+    if (month !== 10) { // 11 = Dicembre
         console.log("Non è dicembre, nessuna casella attivata.");
         return;
-    } */
+    }
 
     try {
         //const result = await Casella.updateOne({ ID: day }, { $set: { Attiva: true } });
-        const result = await Casella.updateOne({ ID: /* day */1 }, { $set: { Attiva: false } });
+        const result = await Casella.updateOne({ ID: day  }, { $set: { Attiva: true } });
         console.log(`Casella ID=${day} attivata:`, result.modifiedCount);
     } catch (err) {
         console.error("Errore aggiornamento casella:", err);
