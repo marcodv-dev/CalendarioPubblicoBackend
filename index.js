@@ -82,35 +82,7 @@ app.get('/cron/aggiorna', async (req, res) => {
     }
 });
 
-// Esegue ogni giorno a mezzanotte
-cron.schedule('0 0 * * *', () => {
-    console.log("🔥 Aggiornamento casella giornaliera...");
-    aggiornaCasellaDelGiorno();
-}, {
-    timezone: "Europe/Rome"
-});
-
-// Test API
-app.get('/api/hello', (req, res) => {
-    res.json({ message: 'Ciao dal backend!' });
-});
-
 app.listen(PORT, () => console.log(`Server in ascolto sulla porta ${PORT}`));
-
-
-/* // Funzione per aggiornare la casella del giorno
-const aggiorna = async () => {
-    try {
-        const result = await Casella.updateMany(
-            {},                 // nessun filtro → seleziona tutti i documenti
-            { $set: { Attiva: true, Completata: false } }
-        );
-        console.log("Aggiornate:", result.modifiedCount);
-    } catch (err) {
-        console.error("Errore aggiornamento casella:", err);
-    }
-};
-aggiorna(); */
 
 app.get("/api/time", (req, res) => {
     res.json({ serverTime: new Date().toString() });
