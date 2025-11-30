@@ -37,20 +37,6 @@ app.get("/api/caselle", async (req, res) => {
     }
 });
 
-app.get("/api/caselle_attive", async (req, res) => {
-    try {
-        for (let i = 1; i < 25; i++) {
-            const result = await Casella.updateOne({ ID: i }, { $set: { Attiva: false } });
-            console.log(result);
-        }
-        res.json({ success: true });
-        //res.json(result);
-    } catch (err) {
-        console.error("Errore MongoDB:", err);
-        res.status(500).json({ error: "Errore recupero caselle" });
-    }
-});
-
 // POST per segnare una casella come completata
 app.post("/api/casella_completata", async (req, res) => {
     try {
