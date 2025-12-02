@@ -59,28 +59,37 @@ const aggiornaCasellaDelGiorno = async () => {
     const day = today.getDate(); // 1,2,...31
     const month = today.getMonth(); // 0=Gennaio, 11=Dicembre
 
-    if (month !== 10) { // 11 = Dicembre
+    if (month !== 10) {
         console.log("Non è dicembre, nessuna casella attivata.");
-        return;
+        return { day, updated: false };
     }
 
     try {
-        //const result = await Casella.updateOne({ ID: day }, { $set: { Attiva: true } });
-        const result = await Casella.updateOne({ ID: day  }, { $set: { Attiva: true } });
+        const result = await Casella.updateOne(
+            { ID: day },
+            { $set: { Attiva: true } }
+        );
+
         console.log(`Casella ID=${day} attivata:`, result.modifiedCount);
+
+        return { day, updated: result.modifiedCount > 0 };
+
     } catch (err) {
         console.error("Errore aggiornamento casella:", err);
+        return { day, updated: false, error: true };
     }
 };
 
+
 app.get('/cron/aggiorna', async (req, res) => {
     try {
-        await aggiornaCasellaDelGiorno();
-        res.send("OK");
+        const result = await aggiornaCasellaDelGiorno();
+        res.json(result); // 👈 risponde con il day rilevato
     } catch (e) {
         res.status(500).send("Errore");
     }
 });
+
 
 app.listen(PORT, () => console.log(`Server in ascolto sulla porta ${PORT}`));
 
