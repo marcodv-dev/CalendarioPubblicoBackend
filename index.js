@@ -61,7 +61,7 @@ const aggiornaCasellaDelGiorno = async () => {
 
     if (month !== 11) {
         console.log("Non è dicembre, nessuna casella attivata.");
-        return { day, updated: false };
+        return { day, month, updated: false };
     }
 
     try {
