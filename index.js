@@ -70,7 +70,7 @@ const aggiornaCasellaDelGiorno = async () => {
             { $set: { Attiva: true } }
         );
 
-        console.log(`Casella ID=${day} attivata:`, result.modifiedCount);
+        console.log(`Casella ID=${day + 1} attivata:`, result.modifiedCount);
 
         return { day, updated: result.modifiedCount > 0 };
 
