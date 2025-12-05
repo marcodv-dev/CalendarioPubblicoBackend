@@ -55,7 +55,9 @@ app.post("/api/casella_completata", async (req, res) => {
 
 // Funzione per aggiornare la casella del giorno
 const aggiornaCasellaDelGiorno = async () => {
-    const today = new Date();
+    const zoned = new Date().toLocaleString("en-US", { timeZone: "Europe/Rome" });
+    const today = new Date(zoned);
+
     const day = today.getDate(); // 1,2,...31
     const month = today.getMonth(); // 0=Gennaio, 11=Dicembre
 
@@ -70,7 +72,7 @@ const aggiornaCasellaDelGiorno = async () => {
             { $set: { Attiva: true } }
         );
 
-        console.log(`Casella ID=${day + 1} attivata:`, result.modifiedCount);
+        console.log(`Casella ID=${day} attivata:`, result.modifiedCount);
 
         return { day, updated: result.modifiedCount > 0 };
 
